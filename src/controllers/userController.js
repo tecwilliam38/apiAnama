@@ -1,4 +1,4 @@
-import userService from "../Services/userService";
+import userService from "../Services/userService.js";
 
 
 
@@ -41,5 +41,5 @@ async function EditarUsuario(req, res) {
 }
 
 
-export default { CadastroUser, LoginUser, ProfileUser };
+export default { CadastroUser, LoginUser, ProfileUser, EditarUsuario };
 

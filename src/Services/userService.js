@@ -1,14 +1,15 @@
 
 import repoUser from "../repositories/repoUser.js";
-
+import bcrypt from "bcryptjs";
+import jwt from "../token.js";
 async function CadastroUser(user_name, endereco, user_cel_phone, user_email, user_password) {
 
     const hashPassword = await bcrypt.hash(user_password, 10);
-    const admin = await repoUser.CadastroUser(user_name, endereco, user_cel_phone, user_email, user_password);
+    const user = await repoUser.CadastroUser(user_name, endereco, user_cel_phone, user_email, user_password);
 
-    admin.token = jwt.CreateToken(admin.id_user);
+    user.token = jwt.CreateToken(user.id_user);
 
-    return admin;
+    return user;
 }
 async function LoginUser(user_email, user_password) {
 

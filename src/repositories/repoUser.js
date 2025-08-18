@@ -1,10 +1,10 @@
 import pool from "../database/db.js";
 
 
-async function VerificaEmailExistente(email) {
+async function VerificaEmailExistente(user_email) {
     try {
         const query = 'SELECT count(*) FROM anama_user WHERE user_email = $1';
-        const result = await pool.query(query, [email]);
+        const result = await pool.query(query, [user_email]);
         return parseInt(result.rows[0].count) > 0;
     } catch (error) {
         console.error('Erro ao verificar email:', error);
@@ -16,7 +16,7 @@ async function CadastroUser(
     created_at, updated_at
 ) {
     try {
-        const emailJaExiste = await verificaEmailExistente(email);
+        const emailJaExiste = await VerificaEmailExistente(user_email);
         if (emailJaExiste) {
             console.log('Email já cadastrado.');
             return { erro: 'Email já cadastrado' };

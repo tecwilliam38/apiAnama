@@ -12,41 +12,42 @@ async function VerificaEmailExistente(user_email) {
     }
 }
 async function CadastroUser(
-    user_email, user_password, user_name, user_cel_phone, endereco,
-    created_at, updated_at
+    user_email, user_name, user_cel_phone, endereco, password
 ) {
+    const emailJaExiste = await VerificaEmailExistente(user_email);
+    if (emailJaExiste) {
+        console.log('Email já cadastrado.');
+        return [];
+    }
+
+    const insertQuery = `
+        INSERT INTO anama_user (
+            user_email, user_name, user_cel_phone, endereco, password,
+            created_at, updated_at
+        )
+        VALUES ($1, $2, $3, $4, $5, current_timestamp, current_timestamp)
+        RETURNING id_user
+    `;
+
     try {
-        const emailJaExiste = await VerificaEmailExistente(user_email);
-        if (emailJaExiste) {
-            console.log('Email já cadastrado.');
-            return { erro: 'Email já cadastrado' };
-        }
-        const sqlInsert = `
-            INSERT INTO anama_user (  user_email, user_password, user_name, user_cel_phone, endereco,
-             created_at, updated_at)
-                VALUES ($1, $2, $3, $4, $5, current_timestamp, current_timestamp)
-            RETURNING id_user;
-        `;
-
-        const result = await pool.query(sqlInsert, [
-            user_name, endereco, user_cel_phone, user_email, user_password
+        const result = await pool.query(insertQuery, [
+            user_email, user_name, user_cel_phone, endereco, password
         ]);
-
-        return result.rows[0]; // Retorna o cliente inserido com id_client
+        return result.rows[0];
     } catch (error) {
-        console.error('Erro ao inserir cliente:', error);
+        console.error('Erro ao inserir:', error);
         throw error;
     }
 }
 
 async function LoginUser(user_email) {
-    let sql = `select * from anama_user where user_email = $1`;
+      let sql = `select * from anama_user where user_email = $1`;
     try {
-        const userLogin = await pool.query(sql, [user_email]);
-        if (userLogin.length == 0)
+        const user = await pool.query(sql, [user_email]);
+        if (user.length == 0)
             return [];
         else
-            return userLogin.rows[0];
+            return user.rows[0];
     } catch (err) {
         console.log(err);
     }
@@ -58,7 +59,7 @@ async function ProfileUser(id_user) {
          au.user_name AS nome, 
          au.user_email, 
          au.user_cel_phone AS telefone,
-         au.user_password as password,
+         au.password as password,
        FROM anama_user AS au 
        WHERE ad.id_user = $1`;
 
@@ -67,14 +68,14 @@ async function ProfileUser(id_user) {
     return userProfile.rows[0];
 }
 
-async function EditarUser(id_user, user_name, user_email, user_password,
+async function EditarUser(id_user, user_name, user_email, password,
     endereco, user_cel_phone, updated_at) {
 
-    let sql = `update anama_user set user_name=$1, user_email=$2, user_password=$3, endereco=$4,
+    let sql = `update anama_user set user_name=$1, user_email=$2, password=$3, endereco=$4,
      user_cel_phone=$7, updated_at= current_timestamp
      where id_user = $11`;
 
-    await pool.query(sql, [user_name, user_email, user_password,
+    await pool.query(sql, [user_name, user_email, password,
         endereco, user_cel_phone]);
     return { id_user };
 }

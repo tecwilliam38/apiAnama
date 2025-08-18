@@ -22,7 +22,7 @@ async function CadastroUser(
             return { erro: 'Email já cadastrado' };
         }
         const sqlInsert = `
-            INSERT INTO anama_user ( user_name, endereco, user_cel_phone, user_email, user_password,
+            INSERT INTO anama_user (  user_email, user_password, user_name, user_cel_phone, endereco,
              created_at, updated_at)
                 VALUES ($1, $2, $3, $4, $5, current_timestamp, current_timestamp)
             RETURNING id_user;

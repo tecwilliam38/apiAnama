@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node --watch src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +11,6 @@
   "keywords": [],
   "author": "William Ferreira da Silva",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@neondatabase/serverless": "^0.10.1",
     "bcryptjs": "^3.0.2",

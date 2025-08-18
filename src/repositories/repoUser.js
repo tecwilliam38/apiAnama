@@ -22,14 +22,14 @@ async function CadastroUser(
             return { erro: 'Email já cadastrado' };
         }
         const sqlInsert = `
-            INSERT INTO anama_user ( user_email, user_password, user_name,
-             user_cel_phone, endereco, created_at, updated_at)
+            INSERT INTO anama_user ( user_name, endereco, user_cel_phone, user_email, user_password,
+             created_at, updated_at)
                 VALUES ($1, $2, $3, $4, $5, current_timestamp, current_timestamp)
             RETURNING id_user;
         `;
 
         const result = await pool.query(sqlInsert, [
-            user_email, user_password, user_name, user_cel_phone, endereco
+            user_name, endereco, user_cel_phone, user_email, user_password
         ]);
 
         return result.rows[0]; // Retorna o cliente inserido com id_client
@@ -74,8 +74,8 @@ async function EditarUser(id_user, user_name, user_email, user_password,
      user_cel_phone=$7, updated_at= current_timestamp
      where id_user = $11`;
 
-    await pool.query(sql, [ user_name, user_email, user_password,
-    endereco, user_cel_phone]);
+    await pool.query(sql, [user_name, user_email, user_password,
+        endereco, user_cel_phone]);
     return { id_user };
 }
 

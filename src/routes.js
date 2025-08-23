@@ -21,7 +21,7 @@ router.post('/add/maigo', jwt.ValidateToken,userController.addFriend);
 // Rotas Posts
 router.post('/messages/send', jwt.ValidateToken, messageController.postMessage);
 router.get('/messages/get', jwt.ValidateToken, messageController.getMessages);
-router.post('/posts/upload', jwt.VerifyToken, upload.single('image'), messageController.HandleUpload);
+router.post('/posts/upload', jwt.ValidateToken, upload.single('image'), messageController.HandleUpload);
 
 
 export default router;

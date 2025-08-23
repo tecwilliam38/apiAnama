@@ -44,5 +44,20 @@ function VerifyToken(req, res, next) {
   }
 }
 
+function AuthMiddleware(roleKey = 'id_user') {
+  return (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) return res.status(401).json({ error: 'Token não informado' });
 
-export default { CreateToken, ValidateToken, VerifyToken };
+    const token = authHeader.split(' ')[1];
+    try {
+      const decoded = jwt.verify(token, secretToken); // usa o mesmo segredo
+      req[roleKey] = decoded[roleKey]; // injeta id_user ou outro campo
+      next();
+    } catch (err) {
+      res.status(403).json({ error: 'Token inválido' });
+    }
+  };
+}
+
+export default { CreateToken, ValidateToken, VerifyToken, AuthMiddleware };

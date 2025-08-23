@@ -15,6 +15,8 @@ router.put("/user/:id_user", jwt.ValidateToken, userController.EditarUsuario);
 
 // Rotas Posts
 // Enviar mensagem
-router.post('/messages/send', jwt.ValidateToken, messageController.postMessage)
+router.post('/messages/send', jwt.ValidateToken, messageController.postMessage);
+router.get('/messages/get',jwt.ValidateToken,messageController.getMessages);
+
 
 export default router;

@@ -10,5 +10,20 @@ const postMessage = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const getMessages = async (req, res) => {
+  const { user1, user2 } = req.query;
 
-export default {postMessage};
+  if (!user1 || !user2) {
+    return res.status(400).json({ error: 'Parâmetros user1 e user2 são obrigatórios' });
+  }
+
+  try {
+    const messages = await messageService.FetchMessages(user1, user2);
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+export default {postMessage, getMessages};

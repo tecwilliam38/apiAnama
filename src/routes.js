@@ -14,7 +14,6 @@ router.put("/user/:id_user", jwt.ValidateToken, userController.EditarUsuario);
 // Rotas Admin
 
 // Rotas Posts
-// Enviar mensagem
 router.post('/messages/send', jwt.ValidateToken, messageController.postMessage);
 router.get('/messages/get',jwt.ValidateToken, messageController.getMessages);
 

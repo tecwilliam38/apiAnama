@@ -1,6 +1,7 @@
 import { Router } from "express";
 import userController from "./controllers/userController.js";
 import jwt from "./token.js"
+import messageController from "./controllers/messageController.js";
 
 const router = Router();
 
@@ -13,5 +14,7 @@ router.put("/user/:id_user", jwt.ValidateToken, userController.EditarUsuario);
 // Rotas Admin
 
 // Rotas Posts
+// Enviar mensagem
+router.post('/messages/send', jwt.ValidateToken, messageController.postMessage)
 
 export default router;

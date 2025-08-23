@@ -3,7 +3,7 @@ import messageService from "../Services/messageService.js";
 
 const postMessage = async (req, res) => {
   try {
-    const { sender_id, receiver_id, message_text} = req.body;
+    const { sender_id, receiver_id, message_text } = req.body;
     const message = await messageService.createMessage({ sender_id, receiver_id, message_text });
     res.status(201).json(message);
   } catch (error) {
@@ -25,5 +25,17 @@ const getMessages = async (req, res) => {
   }
 };
 
+async function HandleUpload(req, res) {
+  try {
+    const image_url = await messageService.UploadImage(req.file, req.user.auth_uid);
+    res.json({ success: true, image_url });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+}
 
-export default {postMessage, getMessages};
+
+
+
+export default { postMessage, getMessages, HandleUpload };

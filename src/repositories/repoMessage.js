@@ -19,7 +19,7 @@ async function SendMessages({ sender_id, receiver_id, message_text }) {
 
 }
 
-async function GetMessagesBetweenUsers (user1, user2){
+async function GetMessagesBetweenUsers(user1, user2) {
   const query = `
     SELECT * FROM anama_messages
     WHERE (sender_id = $1 AND receiver_id = $2)
@@ -36,7 +36,19 @@ async function GetMessagesBetweenUsers (user1, user2){
   }
 };
 
+async function SaveImageUrl(id_user, image_url) {
+  await pool.query(
+    'INSERT INTO anama_images (id_user, image_url, created_at) VALUES ($1, $2, NOW())',
+    [id_user, image_url]
+  );
+}
 
+async function getUserIdByAuthUid(auth_uid) {
+  const result = await pool.query(
+    'SELECT id_user FROM anama_user WHERE auth_uid = $1',
+    [auth_uid]
+  );
+  return result.rows[0]?.id_user;
+}
 
-
-export default {SendMessages, GetMessagesBetweenUsers};
+export default { SendMessages, GetMessagesBetweenUsers, SaveImageUrl, getUserIdByAuthUid };

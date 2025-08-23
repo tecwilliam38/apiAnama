@@ -25,17 +25,8 @@ const getMessages = async (req, res) => {
   }
 };
 
-async function HandleUpload(req, res) {
-  try {
-    const image_url = await messageService.UploadImage(req.file, req.user.auth_uid);
-    res.json({ success: true, image_url });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, error: err.message });
-  }
-}
 
 
 
 
-export default { postMessage, getMessages, HandleUpload };
+export default { postMessage, getMessages};

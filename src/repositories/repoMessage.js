@@ -7,7 +7,7 @@ async function SendMessages({ sender_id, receiver_id, message_text }) {
     VALUES ($1, $2, $3)
     RETURNING *;
   `;
-    const values = [sender_id, receiver_id, text];
+    const values = [sender_id, receiver_id, message_text];
 
     const result = await pool.query(query, values);
     return result.rows[0];

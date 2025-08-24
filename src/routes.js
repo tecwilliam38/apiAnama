@@ -23,5 +23,10 @@ router.post('/friends/contact', jwt.ValidateToken, userController.addFriendByCon
 router.post('/messages/send', jwt.ValidateToken, messageController.postMessage);
 router.get('/messages/get', jwt.ValidateToken, messageController.getMessages);
 router.get('/messages/:userId',jwt.ValidateToken,userController.listMyFriendsHandler);
+router.post('/messages/put', jwt.ValidateToken, messageController.sendMessageHandler);
+// Buscar conversa com um amigo
+router.get('/messages/get/:friend_id', jwt.ValidateToken, getConversationHandler);
+
+
 
 export default router;

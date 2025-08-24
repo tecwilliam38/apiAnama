@@ -111,6 +111,7 @@ const findByEmailOrPhone = async (contact) => {
   `;
   const { rows } = await pool.query(query, [
     contact, 
+    // O 10aqui abaixo indica que é sistema Decimal, se fosse binário seria "2"
     isPhone ? parseInt(contact, 10) : null
   ]);
   return rows[0];

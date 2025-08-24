@@ -42,34 +42,13 @@ async function EditarUsuario(req, res) {
 }
 
 const addFriend = async (req, res) => {
-  const { friend_email } = req.body;
-  const user_id = req.user.id_user; // vindo do middleware JWT
-
+  const { id_user, friend_id } = req.body;
   try {
-    const friendRes = await pool.query(
-      'SELECT id_user FROM anama_user WHERE user_email = $1',
-      [friend_email]
-    );
-
-    if (friendRes.rowCount === 0) {
-      return res.status(404).json({ error: 'Amigo não encontrado' });
-    }
-
-    const friend_id = friendRes.rows[0].id_user;
-
-    if (friend_id === user_id) {
-      return res.status(400).json({ error: 'Você não pode se adicionar como amigo' });
-    }
-
-    await pool.query(
-      'INSERT INTO anama_amigos (user_id, friend_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
-      [user_id, friend_id]
-    );
-
-    res.json({ success: true, message: 'Amigo adicionado com sucesso' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Erro ao adicionar amigo' });
+    await userService.addFriend(id_user, friend_id);
+    res.status(201).json({ message: 'Amizade criada com sucesso' });
+  } catch (error) {
+    console.error('Erro ao adicionar amigo:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
   }
 };
 
@@ -84,8 +63,22 @@ const getFriends = async (req, res) => {
     res.status(500).json({ error: 'Erro interno do servidor' });
   }
 };
+const addFriendByContact = async (req, res) => {
+  const { requester_id, contact_info } = req.body;
+
+  try {
+    const friend = await userService.findUserByContact(contact_info);
+    if (!friend) return res.status(404).json({ error: 'Usuário não encontrado' });
+
+    await userService.addFriend(requester_id, friend.id);
+    res.status(201).json({ message: 'Amigo adicionado com sucesso' });
+  } catch (err) {
+    console.error('Erro ao adicionar amigo:', err);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+};
 
 
 
-export default { CadastroUser, LoginUser, ProfileUser, EditarUsuario, addFriend, getFriends };
+export default { CadastroUser, LoginUser, ProfileUser, EditarUsuario, addFriend, getFriends, addFriendByContact };
 

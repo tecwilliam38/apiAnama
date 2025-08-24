@@ -41,7 +41,7 @@ async function CadastroUser(
 }
 
 async function LoginUser(user_email) {
-      let sql = `select * from anama_user where user_email = $1`;
+    let sql = `select * from anama_user where user_email = $1`;
     try {
         const user = await pool.query(sql, [user_email]);
         if (user.length == 0)
@@ -80,18 +80,53 @@ async function EditarUser(id_user, user_name, user_email, password,
     return { id_user };
 }
 const getFriendsByUserId = async (userId) => {
-  const query = `
+    const query = `
      SELECT u.id_user, u.user_name, u.user_email
     FROM anama_friendships f
     JOIN anama_user u ON u.id_user = f.friend_id
     WHERE f.id_user = $1
   `;
 
-  const { rows } = await pool.query(query, [userId]);
-  return rows;
+    const { rows } = await pool.query(query, [userId]);
+    return rows;
 };
 
+const insertFriendship = async (id_user, friend_id) => {
+    const query = `
+    INSERT INTO anama_friendships (id_user, friend_id)
+    VALUES 
+      ($1, $2),
+      ($2, $1)
+    ON CONFLICT DO NOTHING
+  `;
+    await pool.query(query, [id_user, friend_id]);
+};
 
+const findByEmailOrPhone = async (contact) => {
+    const query = `
+    SELECT id_user, user_name FROM anama_user
+    WHERE user_email = $1 OR user_cel_phone = $1
+    LIMIT 1
+  `;
+    const { rows } = await pool.query(query, [contact]);
+    return rows[0];
+};
+const insertFriendshipByemail = async (id_user, friend_id) => {
+    const query = `
+    INSERT INTO anama_friendships (id_user, friend_id)
+    VALUES ($1, $2), ($2, $1)
+    ON CONFLICT DO NOTHING
+  `;
+    await pool.query(query, [id_user, friend_id]);
+};
 
-
-export default { CadastroUser, ProfileUser, LoginUser, EditarUser, getFriendsByUserId };
+export default {
+    CadastroUser,
+    ProfileUser,
+    LoginUser,
+    EditarUser,
+    getFriendsByUserId,
+    insertFriendship,
+    findByEmailOrPhone,
+    insertFriendshipByemail
+};

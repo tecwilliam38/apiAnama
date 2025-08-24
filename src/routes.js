@@ -15,7 +15,7 @@ router.get("/user/profile/:id_user", userController.ProfileUser);
 router.put("/user/:id_user", jwt.ValidateToken, userController.EditarUsuario);
 router.post('/users/friends', jwt.ValidateToken, userController.addFriend);
 router.get('/users/friends', jwt.ValidateToken, userController.getFriends);
-
+router.post('/friends/contact', jwt.ValidateToken, userController.addFriendByContact);
 
 // Rotas Admin
 

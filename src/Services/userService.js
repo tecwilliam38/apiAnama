@@ -43,9 +43,32 @@ async function EditarUser(id_user, user_name, user_email, endereco, password, us
 
     return usuario;
 }
-const fetchFriends = async (userId) => {
-  return await repoUser.getFriendsByUserId(userId);
+
+
+const addFriend = async (id_user, friend_id) => {
+  return await repoUser.insertFriendship(id_user, friend_id);
 };
 
 
-export default { CadastroUser, LoginUser, ProfileUser, EditarUser, fetchFriends }
+
+const fetchFriends = async (userId) => {
+  return await repoUser.getFriendsByUserId(userId);
+};
+const findUserByContact = async (contact) => {
+  return await repoUser.findByEmailOrPhone(contact);
+};
+
+const addFriendByContact = async (id_user, friend_id) => {
+  return await repoUser.insertFriendshipByemail(id_user, friend_id);
+};
+
+
+export default { 
+    CadastroUser, 
+    LoginUser, 
+    ProfileUser, 
+    EditarUser, 
+    fetchFriends, 
+    addFriend,
+    findUserByContact,
+     addFriendByContact }

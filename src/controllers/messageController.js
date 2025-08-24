@@ -26,7 +26,8 @@ const getMessages = async (req, res) => {
 };
 async function sendMessageHandler(req, res) {
   try {
-    const { friend_id, message_text } = req.body;
+    const { message_text } = req.body;
+    const { friend_id} = req.params;
     const id_user = req.user.id;
 
     const message = await messageService.sendMessage({ id_user, friend_id, message_text });

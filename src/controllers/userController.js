@@ -70,10 +70,14 @@ const addFriendByContact = async (req, res) => {
     const friend = await userService.findUserByContact(contact_info);
     if (!friend) return res.status(404).json({ error: 'Usuário não encontrado' });
 
-    await userService.addFriend(requester_id, friend.id);
+    await userService.addFriendByContact(requester_id, friend.id_user);
     res.status(201).json({ message: 'Amigo adicionado com sucesso' });
   } catch (err) {
     console.error('Erro ao adicionar amigo:', err);
+    if (!friend || !friend.id_user) {
+      return res.status(404).json({ error: 'Usuário não encontrado ou inválido' });
+    }
+
     res.status(500).json({ error: 'Erro interno do servidor' });
   }
 };

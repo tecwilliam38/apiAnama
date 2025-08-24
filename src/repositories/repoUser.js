@@ -103,14 +103,19 @@ const insertFriendship = async (id_user, friend_id) => {
 };
 
 const findByEmailOrPhone = async (contact) => {
-    const query = `
-    SELECT id_user, user_name FROM anama_user
-    WHERE user_email = $1 OR user_cel_phone = $1
+  const isPhone = /^\d+$/.test(contact); // verifica se é só número
+  const query = `
+    SELECT id_user, user_name, user_cel_phone FROM anama_user
+    WHERE user_email = $1 OR user_cel_phone = $2
     LIMIT 1
   `;
-    const { rows } = await pool.query(query, [contact]);
-    return rows[0];
+  const { rows } = await pool.query(query, [
+    contact, 
+    isPhone ? parseInt(contact, 10) : null
+  ]);
+  return rows[0];
 };
+
 const insertFriendshipByemail = async (id_user, friend_id) => {
     const query = `
     INSERT INTO anama_friendships (id_user, friend_id)

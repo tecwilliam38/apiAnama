@@ -24,9 +24,35 @@ const getMessages = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+async function sendMessageHandler(req, res) {
+  try {
+    const { friend_id, message_text } = req.body;
+    const id_user = req.user.id;
+
+    const message = await messageService.sendMessage({ id_user, friend_id, message_text });
+    res.status(201).json(message);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+async function getConversationHandler(req, res) {
+  try {
+    const id_user = req.user.id;
+    const friend_id = parseInt(req.params.friend_id);
+
+    const messages = await messageService.getConversation(id_user, friend_id);
+    res.status(200).json(messages);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
 
 
 
-
-
-export default { postMessage, getMessages};
+export default {
+  sendMessageHandler,
+  getConversationHandler,
+  postMessage,
+  getMessages
+};

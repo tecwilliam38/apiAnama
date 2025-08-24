@@ -26,8 +26,7 @@ const getMessages = async (req, res) => {
 };
 async function sendMessageHandler(req, res) {
   try {
-    const { message_text } = req.body;
-    const { friend_id} = req.params;
+    const { friend_id, message_text } = req.body;
     const id_user = req.user.id;
 
     const message = await messageService.sendMessage({ id_user, friend_id, message_text });
@@ -40,7 +39,7 @@ async function sendMessageHandler(req, res) {
 async function getConversationHandler(req, res) {
   try {
     const id_user = req.user.id;
-    const friend_id = parseInt(req.params.friend_id);
+    const friend_id = req.params.friend_id;
 
     const messages = await messageService.getConversation(id_user, friend_id);
     res.status(200).json(messages);

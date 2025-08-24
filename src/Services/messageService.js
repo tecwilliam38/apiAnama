@@ -15,4 +15,18 @@ const FetchMessages = async (user1, user2) => {
   return await repoMessage.GetMessagesBetweenUsers(user1, user2);
 };
 
-export default { createMessage, FetchMessages }
+async function sendMessage(data) {
+  return await repoMessage.createMessage(data);
+}
+
+async function getConversation(id_user, friend_id) {
+  return await repoMessage.getMessages(id_user, friend_id);
+}
+
+
+
+export default { 
+  sendMessage,
+  getConversation,
+  createMessage,
+   FetchMessages }

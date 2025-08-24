@@ -1,6 +1,5 @@
 import pool from "../database/db.js"
 
-
 async function SendMessages({ sender_id, receiver_id, message_text }) {
   const query = `
     INSERT INTO anama_messages (sender_id, receiver_id, message_text)
@@ -36,5 +35,30 @@ async function GetMessagesBetweenUsers(user1, user2) {
   }
 };
 
+async function getMessages(id_user, friend_id) {
+  const query = `
+    SELECT * FROM anama_messages
+    WHERE (id_user = $1 AND friend_id = $2)
+       OR (id_user = $2 AND friend_id = $1)
+    ORDER BY created_at ASC;
+  `;
+  const result = await pool.query(query, [id_user, friend_id]);
+  return result.rows;
+}
 
-export default { SendMessages, GetMessagesBetweenUsers };
+async function createMessage({ id_user, friend_id, message_text }) {
+  const query = `
+    INSERT INTO anama_messages (id_user, friend_id, message_text)
+    VALUES ($1, $2, $3)
+    RETURNING *;
+  `;
+  const result = await pool.query(query, [id_user, friend_id, message_text]);
+  return result.rows[0];
+}
+
+export default {
+  getMessages,
+  createMessage,
+  SendMessages,
+  GetMessagesBetweenUsers
+};

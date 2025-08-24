@@ -4,41 +4,41 @@ import userService from "../Services/userService.js";
 
 async function CadastroUser(req, res) {
 
-    const { user_email, user_name, user_cel_phone, endereco, password } = req.body;
+  const { user_email, user_name, user_cel_phone, endereco, password } = req.body;
 
-    const user = await userService.CadastroUser(user_email, user_name, user_cel_phone, endereco, password);
+  const user = await userService.CadastroUser(user_email, user_name, user_cel_phone, endereco, password);
 
-    res.status(201).json(user);
+  res.status(201).json(user);
 }
 
 async function LoginUser(req, res) {
 
-    const { user_email, password } = req.body;
+  const { user_email, password } = req.body;
 
-    const userData = await userService.LoginUser(user_email, password);
+  const userData = await userService.LoginUser(user_email, password);
 
-    if (!userData)
-        res.status(401).json({ error: "E-mail ou senha inválida" });
-    else
-        res.status(200).json(userData);
+  if (!userData)
+    res.status(401).json({ error: "E-mail ou senha inválida" });
+  else
+    res.status(200).json(userData);
 }
 
 async function ProfileUser(req, res) {
 
-    const id_user = req.params.id_user;
-    const userProfile = await userService.ProfileUser(id_user);
+  const id_user = req.params.id_user;
+  const userProfile = await userService.ProfileUser(id_user);
 
-    res.status(200).json(userProfile);
+  res.status(200).json(userProfile);
 }
 
 async function EditarUsuario(req, res) {
 
-    const id_user = req.params.id_user;
-    const { user_email, password, user_name, user_cel_phone, endereco, } = req.body;
+  const id_user = req.params.id_user;
+  const { user_email, password, user_name, user_cel_phone, endereco, } = req.body;
 
-    const user = await userService.EditarUser(id_user, user_email, password, user_name, user_cel_phone, endereco);
+  const user = await userService.EditarUser(id_user, user_email, password, user_name, user_cel_phone, endereco);
 
-    res.status(200).json(user);
+  res.status(200).json(user);
 }
 
 const addFriend = async (req, res) => {
@@ -73,7 +73,19 @@ const addFriend = async (req, res) => {
   }
 };
 
+const getFriends = async (req, res) => {
+  try {
+    const id_user = req.user.id_user;
+
+    const friends = await userService.fetchFriends(id_user);
+    res.json(friends);
+  } catch (error) {
+    console.error('Erro ao buscar amigos:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+};
 
 
-export default { CadastroUser, LoginUser, ProfileUser, EditarUsuario, addFriend };
+
+export default { CadastroUser, LoginUser, ProfileUser, EditarUsuario, addFriend, getFriends };
 

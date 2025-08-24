@@ -13,7 +13,8 @@ router.post("/user/register", userController.CadastroUser);
 router.post("/user/login", userController.LoginUser);
 router.get("/user/profile/:id_user", userController.ProfileUser);
 router.put("/user/:id_user", jwt.ValidateToken, userController.EditarUsuario);
-router.post('/add/maigo', jwt.ValidateToken,userController.addFriend);
+router.post('/users/friends', jwt.ValidateToken, userController.addFriend);
+router.get('/users/friends', jwt.ValidateToken, userController.getFriends);
 
 
 // Rotas Admin

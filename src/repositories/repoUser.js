@@ -79,7 +79,19 @@ async function EditarUser(id_user, user_name, user_email, password,
         endereco, user_cel_phone]);
     return { id_user };
 }
+const getFriendsByUserId = async (userId) => {
+  const query = `
+     SELECT u.id_user, u.user_name, u.user_email
+    FROM anama_friendships f
+    JOIN anama_user u ON u.id_user = f.friend_id
+    WHERE f.id_user = $1
+  `;
+
+  const { rows } = await pool.query(query, [userId]);
+  return rows;
+};
 
 
 
-export default { CadastroUser, ProfileUser, LoginUser, EditarUser };
+
+export default { CadastroUser, ProfileUser, LoginUser, EditarUser, getFriendsByUserId };

@@ -43,6 +43,9 @@ async function EditarUser(id_user, user_name, user_email, endereco, password, us
 
     return usuario;
 }
+const fetchFriends = async (userId) => {
+  return await repoUser.getFriendsByUserId(userId);
+};
 
 
-export default { CadastroUser, LoginUser, ProfileUser, EditarUser }
+export default { CadastroUser, LoginUser, ProfileUser, EditarUser, fetchFriends }

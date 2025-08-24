@@ -126,6 +126,19 @@ const insertFriendshipByemail = async (id_user, friend_id) => {
     await pool.query(query, [id_user, friend_id]);
 };
 
+function findFriendsByRequesterId(userId) {
+  const query = `
+    SELECT u.id_user, u.user_name, u.user_email, u.user_cel_phone, f.friend_id
+    FROM anama_friendships f
+    JOIN anama_user u ON u.id_user = f.friend_id
+    WHERE f.id_user = $1
+    ORDER BY f.created_at DESC
+  `;
+  return pool.query(query, [userId]).then(res => res.rows);
+}
+
+
+
 export default {
     CadastroUser,
     ProfileUser,
@@ -134,5 +147,6 @@ export default {
     getFriendsByUserId,
     insertFriendship,
     findByEmailOrPhone,
-    insertFriendshipByemail
+    insertFriendshipByemail,
+    findFriendsByRequesterId
 };

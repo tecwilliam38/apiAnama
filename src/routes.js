@@ -22,5 +22,6 @@ router.post('/friends/contact', jwt.ValidateToken, userController.addFriendByCon
 // Rotas Posts
 router.post('/messages/send', jwt.ValidateToken, messageController.postMessage);
 router.get('/messages/get', jwt.ValidateToken, messageController.getMessages);
+router.get('/messages/:userId',jwt.ValidateToken,userController.listMyFriendsHandler);
 
 export default router;

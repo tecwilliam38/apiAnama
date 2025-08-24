@@ -82,7 +82,26 @@ const addFriendByContact = async (req, res) => {
   }
 };
 
+function listMyFriendsHandler(req, res) {
+  const { userId } = req.params;
+
+  userService.listMyFriends(userId)
+    .then(friends => res.status(200).json(friends))
+    .catch(error => {
+      console.error('Erro ao listar amigos:', error);
+      res.status(500).json({ error: 'Erro interno ao buscar amigos.' });
+    });
+}
 
 
-export default { CadastroUser, LoginUser, ProfileUser, EditarUsuario, addFriend, getFriends, addFriendByContact };
+export default {
+  CadastroUser,
+  LoginUser,
+  ProfileUser,
+  EditarUsuario,
+  addFriend,
+  getFriends,
+  addFriendByContact,
+  listMyFriendsHandler
+};
 

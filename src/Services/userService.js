@@ -17,17 +17,17 @@ async function LoginUser(user_email, password) {
 
     const user = await repoUser.LoginUser(user_email);
 
-       if (user.lenght == 0)
-           return [];
-       else {
-          if (await bcrypt.compare(password, user.password)) {
-               delete user.password;
-               user.token = jwt.CreateToken(user.id_user);
-               return user;
-           } else
-               return [];
-       }
-       return user;
+    if (user.lenght == 0)
+        return [];
+    else {
+        if (await bcrypt.compare(password, user.password)) {
+            delete user.password;
+            user.token = jwt.CreateToken(user.id_user);
+            return user;
+        } else
+            return [];
+    }
+    return user;
 }
 async function ProfileUser(id_user) {
 
@@ -46,29 +46,42 @@ async function EditarUser(id_user, user_name, user_email, endereco, password, us
 
 
 const addFriend = async (id_user, friend_id) => {
-  return await repoUser.insertFriendship(id_user, friend_id);
+    return await repoUser.insertFriendship(id_user, friend_id);
 };
 
 
 
 const fetchFriends = async (userId) => {
-  return await repoUser.getFriendsByUserId(userId);
+    return await repoUser.getFriendsByUserId(userId);
 };
 const findUserByContact = async (contact) => {
-  return await repoUser.findByEmailOrPhone(contact);
+    return await repoUser.findByEmailOrPhone(contact);
 };
 
 const addFriendByContact = async (id_user, friend_id) => {
-  return await repoUser.insertFriendshipByemail(id_user, friend_id);
+    return await repoUser.insertFriendshipByemail(id_user, friend_id);
 };
 
+function listMyFriends(userId) {
+    return repoUser.findFriendsByRequesterId(userId).then(friends =>
+        friends.map(friend => ({
+            id: friend.id_uer,
+            name: friend.user_name,
+            friend_id: friend.friend_id || friend.user_email || friend.user_cel_phone
+        }))
+    );
+}
 
-export default { 
-    CadastroUser, 
-    LoginUser, 
-    ProfileUser, 
-    EditarUser, 
-    fetchFriends, 
+
+export default {
+    CadastroUser,
+    LoginUser,
+    ProfileUser,
+    EditarUser,
+    fetchFriends,
     addFriend,
     findUserByContact,
-     addFriendByContact }
+    addFriendByContact,
+    listMyFriends
+}
+

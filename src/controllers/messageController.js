@@ -38,8 +38,9 @@ async function sendMessageHandler(req, res) {
 
 async function getConversationHandler(req, res) {
   try {
-    const id_user = req.user.id_user;
-    const friend_id = req.params.friend_id;
+    // const id_user = req.user.id_user;
+    // const friend_id = req.params.friend_id;
+    const {id_user, friend_id }= req.body;
 
     const messages = await messageService.getConversation(id_user, friend_id);
     res.status(200).json(messages);

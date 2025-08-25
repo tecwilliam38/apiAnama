@@ -26,7 +26,7 @@ const getMessages = async (req, res) => {
 };
 async function sendMessageHandler(req, res) {
   try {
-    const {id_user, friend_id, message_text } = req.body;
+    const { id_user, friend_id, message_text } = req.body;
     // const id_user = req.user.id;
 
     const message = await messageService.sendMessage({ id_user, friend_id, message_text });
@@ -38,10 +38,9 @@ async function sendMessageHandler(req, res) {
 
 async function getConversationHandler(req, res) {
   try {
-    // const id_user = req.user.id_user;
-    // const friend_id = req.params.friend_id;
-      const id_user = req.user.id; // vem do token via middleware
-    const friend_id = parseInt(req.query.friend_id); // vem da URL como query param
+    // const id_user = req.user.id; // vem do token via middleware
+    // const friend_id = parseInt(req.query.friend_id); // vem da URL como query param
+    const { id_user, friend_id } = req.body;
 
 
     // const {id_user, friend_id }= req.query;

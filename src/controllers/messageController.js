@@ -48,8 +48,6 @@ async function getConversationHandler(req, res) {
   }
 }
 
-
-
 export default {
   sendMessageHandler,
   getConversationHandler,

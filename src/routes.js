@@ -24,7 +24,7 @@ router.post('/messages/send', jwt.ValidateToken, messageController.postMessage);
 router.get('/messages/get', jwt.ValidateToken, messageController.getMessages);
 router.get('/messages/:userId',jwt.ValidateToken,userController.listMyFriendsHandler);
 // Enviar mensagem
-router.post('/messages/put', jwt.ValidateToken, messageController.sendMessageHandler);
+router.post('/messages/', jwt.ValidateToken, messageController.sendMessageHandler);
 // Buscar conversa com um amigo
 router.get('/messages/:friend_id', jwt.ValidateToken, messageController.getConversationHandler);
 

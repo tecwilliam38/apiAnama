@@ -9,13 +9,10 @@ function CreateToken(id_user) {
 
 function ValidateToken(req, res, next) {
   const authHeader = req.headers.authorization;
-
   if (!authHeader) {
     return res.status(401).json({ error: 'Token não informado' });
   }
-
   const token = authHeader.split(' ')[1]; // formato: "Bearer <token>"
-
   try {
     const decoded = jwt.verify(token, secretToken); // verifica assinatura
     req.user = { id_user: decoded.id_user }; // injeta no req.user

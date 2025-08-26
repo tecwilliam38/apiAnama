@@ -39,10 +39,9 @@ async function sendMessageHandler(req, res) {
 async function getConversationHandler(req, res) {
   try {
     const id_user = req.user.id; // vem do token via middleware
-    const friend_id =            
-      parseInt(req.params.friend_id);
+    const friend_id = parseInt(req.params.friend_id);
 
-       if (!friend_id) {
+    if (!friend_id) {
       return res.status(400).json({ error: 'friend_id é obrigatório' });
     }
 

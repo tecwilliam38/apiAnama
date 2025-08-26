@@ -41,8 +41,6 @@ async function getMessagesUsers(req, res) {
     const receiver_id = parseInt(req.params.receiver_id);
     
     if (!receiver_id || !sender_id) {
-      console.log("error:", 'friend_id é obrigatório');
-      
       return res.status(400).json({ error: 'friend_id é obrigatório' });
     }
 

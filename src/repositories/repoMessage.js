@@ -46,7 +46,7 @@ async function getMessages(id_user, friend_id) {
   const result = await pool.query(query, [id_user, friend_id]);
   return result.rows;
 }
-const createMessage = async (sender_id, receiver_id, content) => {
+const createMessagess = async (sender_id, receiver_id, content) => {
   const res = await pool.query(
     `INSERT INTO messages (sender_id, receiver_id, content, timestamp) 
      VALUES ($1, $2, $3, NOW()) RETURNING *`,

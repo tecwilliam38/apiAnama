@@ -38,18 +38,22 @@ async function sendMessageHandler(req, res) {
 
 async function getConversationHandler(req, res) {
   try {
-    // const id_user = req.user.id; // vem do token via middleware
-    // const friend_id = parseInt(req.query.friend_id); // vem da URL como query param
-    const { id_user, friend_id } = req.body;
+    const id_user = req.user.id; // vem do token via middleware
+    const friend_id =
+      parseInt(req.body.friend_id) ||
+      parseInt(req.query.friend_id) ||
+      parseInt(req.params.friend_id);
 
-
-    // const {id_user, friend_id }= req.query;
+       if (!friend_id) {
+      return res.status(400).json({ error: 'friend_id é obrigatório' });
+    }
 
     const messages = await messageService.getConversation(id_user, friend_id);
     res.status(200).json(messages);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+
 }
 
 export default {

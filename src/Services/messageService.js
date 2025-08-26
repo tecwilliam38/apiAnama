@@ -19,8 +19,8 @@ async function sendMessage(data) {
   return await repoMessage.createMessage(data);
 }
 
-async function getConversation(id_user, friend_id) {
-  return await repoMessage.getMessages(id_user, friend_id);
+async function getConversation( id_user, friend_id) {
+  return await repoMessage.getMessages(  id_user, friend_id);
 }
 
 

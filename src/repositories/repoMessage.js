@@ -38,14 +38,18 @@ async function GetMessagesBetweenUsers(user1, user2) {
 
 async function getMessages(id_user, friend_id) {
   const query = `
-    SELECT * FROM anama_messages
+    SELECT *
+    FROM anama_messages
     WHERE (id_user = $1 AND friend_id = $2)
-       OR (id_user = $2 AND friend_id = $1)
-    ORDER BY created_at ASC;
-  `;
+    OR (id_user = $2 AND friend_id = $1)
+    ORDER BY created_at ASC`;
+
   const result = await pool.query(query, [id_user, friend_id]);
+  console.log(result.rows);
+  console.log(result.rows[0].message_text);
   return result.rows;
 }
+
 const createMessagess = async (sender_id, receiver_id, content) => {
   const res = await pool.query(
     `INSERT INTO messages (sender_id, receiver_id, content, timestamp) 

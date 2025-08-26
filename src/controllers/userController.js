@@ -82,10 +82,10 @@ const addFriendByContact = async (req, res) => {
   }
 };
 
-function listMyFriendsHandler(req, res) {
+function ListMyFriendsHandler(req, res) {
   const { userId } = req.params;
 
-  userService.listMyFriends(userId)
+  userService.ListMyFriends(userId)
     .then(friends => res.status(200).json(friends))
     .catch(error => {
       console.error('Erro ao listar amigos:', error);
@@ -102,6 +102,6 @@ export default {
   addFriend,
   getFriends,
   addFriendByContact,
-  listMyFriendsHandler
+  ListMyFriendsHandler
 };
 

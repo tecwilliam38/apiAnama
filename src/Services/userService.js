@@ -62,20 +62,9 @@ const addFriendByContact = async (id_user, friend_id) => {
     return await repoUser.insertFriendshipByemail(id_user, friend_id);
 };
 
-function listMyFriends(userId) {
-  return repoUser.findFriendsByRequesterId(userId);
+function ListMyFriends(userId) {
+  return repoUser.FindFriendsByRequesterId(userId);
 }
-
-// function listMyFriends(userId) {
-//     return repoUser.findFriendsByRequesterId(userId).then(friends =>
-//         friends.map(friend => ({
-//             id: friend.id_uer,
-//             name: friend.user_name,
-//             friend_id: friend.friend_id || friend.user_email || friend.user_cel_phone
-//         }))
-//     );
-// }
-
 
 export default {
     CadastroUser,
@@ -86,6 +75,6 @@ export default {
     addFriend,
     findUserByContact,
     addFriendByContact,
-    listMyFriends
+    ListMyFriends
 }
 

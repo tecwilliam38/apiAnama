@@ -12,16 +12,19 @@ const createMessage = async (messageData) => {
   return await repoMessage.SendMessages(messageData);
 };
 const FetchMessages = async (user1, user2) => {
-  return await repoMessage.GetMessagesBetweenUsers(user1, user2);
+  // return await repoMessage.GetMessagesBetweenUsers(user1, user2);
 };
 
 async function sendMessage(data) {
   return await repoMessage.createMessage(data);
 }
 
-async function getConversation( id_user, friend_id) {
-  return await repoMessage.getMessages(  id_user, friend_id);
+async function getConversation( sender_id, receiver_id) {
+  return await repoMessage.getMessages(  sender_id, receiver_id);
 }
+// async function getConversation( id_user, friend_id) {
+//   return await repoMessage.getMessages(  id_user, friend_id);
+// }
 
 
 

@@ -11,23 +11,22 @@ const postMessage = async (req, res) => {
   }
 };
 const getMessages = async (req, res) => {
-  const { user1, user2 } = req.query;
+  // const { user1, user2 } = req.query;
 
-  if (!user1 || !user2) {
-    return res.status(400).json({ error: 'Parâmetros user1 e user2 são obrigatórios' });
-  }
+  // if (!user1 || !user2) {
+  //   return res.status(400).json({ error: 'Parâmetros user1 e user2 são obrigatórios' });
+  // }
 
-  try {
-    const messages = await messageService.FetchMessages(user1, user2);
-    res.json(messages);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  // try {
+  //   const messages = await messageService.FetchMessages(user1, user2);
+  //   res.json(messages);
+  // } catch (error) {
+  //   res.status(500).json({ error: error.message });
+  // }
 };
 async function sendMessageHandler(req, res) {
   try {
     const { id_user, friend_id, message_text } = req.body;
-    // const id_user = req.user.id;
 
     const message = await messageService.sendMessage({ id_user, friend_id, message_text });
     res.status(201).json(message);
@@ -36,26 +35,28 @@ async function sendMessageHandler(req, res) {
   }
 }
 
-async function getConversationHandler(req, res) {
+async function getMessagesUsers(req, res) {
   try {
-    const id_user = req.user.id; // vem do token via middleware
-    const friend_id = parseInt(req.params.friend_id);
-
-    if (!friend_id) {
+    const sender_id = parseInt(req.user.id_user); // vem do token via middleware
+    const receiver_id = parseInt(req.params.receiver_id);
+    
+    if (!receiver_id || !sender_id) {
+      console.log("error:", 'friend_id é obrigatório');
+      
       return res.status(400).json({ error: 'friend_id é obrigatório' });
     }
 
-    const messages = await messageService.getConversation(id_user, friend_id);
+    const messages = await messageService.getConversation(sender_id, receiver_id);
+
     res.status(200).json(messages);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-
 }
 
 export default {
   sendMessageHandler,
-  getConversationHandler,
+  getMessagesUsers,
   postMessage,
   getMessages
 };

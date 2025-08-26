@@ -42,7 +42,7 @@ async function getMessages(sender_id,receiver_id) {
   const query = `
      SELECT 
       m.id,
-       m.sender_id as userId,
+       m.sender_id as userid,
       m.message_text as mensagens,
       m.created_at as enviadas,
       sender.user_name AS usuario,

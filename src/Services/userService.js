@@ -63,14 +63,18 @@ const addFriendByContact = async (id_user, friend_id) => {
 };
 
 function listMyFriends(userId) {
-    return repoUser.findFriendsByRequesterId(userId).then(friends =>
-        friends.map(friend => ({
-            id: friend.id_uer,
-            name: friend.user_name,
-            friend_id: friend.friend_id || friend.user_email || friend.user_cel_phone
-        }))
-    );
+  return repoUser.findFriendsByRequesterId(userId);
 }
+
+// function listMyFriends(userId) {
+//     return repoUser.findFriendsByRequesterId(userId).then(friends =>
+//         friends.map(friend => ({
+//             id: friend.id_uer,
+//             name: friend.user_name,
+//             friend_id: friend.friend_id || friend.user_email || friend.user_cel_phone
+//         }))
+//     );
+// }
 
 
 export default {

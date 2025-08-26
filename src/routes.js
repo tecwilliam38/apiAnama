@@ -28,9 +28,4 @@ router.post('/messages/', jwt.ValidateToken, messageController.sendMessageHandle
 // Buscar conversa com um amigo essa funciona
 router.get('/messages/users/:receiver_id', jwt.ValidateToken, messageController.getMessagesUsers);
 
-
-router.post('/messages/', jwt.ValidateToken, messageController.getMessagesUsers);
-
-
-
 export default router;

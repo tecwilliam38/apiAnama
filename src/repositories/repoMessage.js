@@ -42,10 +42,11 @@ async function getMessages(sender_id,receiver_id) {
   const query = `
      SELECT 
       m.id,
+       m.sender_id as userId,
       m.message_text as mensagens,
       m.created_at as enviadas,
       sender.user_name AS usuario,
-      receiver.user_name AS amigo
+      receiver.user_name AS amigo      
     FROM anama_messages m
     JOIN anama_user sender ON sender.id_user = m.sender_id
     JOIN anama_user receiver ON receiver.id_user = m.receiver_id

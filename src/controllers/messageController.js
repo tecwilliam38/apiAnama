@@ -26,9 +26,9 @@ const getMessages = async (req, res) => {
 };
 async function sendMessageHandler(req, res) {
   try {
-    const { id_user, friend_id, message_text } = req.body;
+    const { sender_id, receiver_id, message_text } = req.body;
 
-    const message = await messageService.sendMessage({ id_user, friend_id, message_text });
+    const message = await messageService.sendMessage({ sender_id, receiver_id, message_text });
     res.status(201).json(message);
   } catch (err) {
     res.status(500).json({ error: err.message });

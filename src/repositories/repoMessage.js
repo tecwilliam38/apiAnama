@@ -67,13 +67,13 @@ const createMessagess = async (sender_id, receiver_id, content) => {
 };
 
 
-async function createMessage({ id_user, friend_id, message_text }) {
+async function createMessage({ sender_id, receiver_id, message_text }) {
   const query = `
-    INSERT INTO anama_messages (id_user, friend_id, message_text, created_at)
+    INSERT INTO anama_messages (sender_id, receiver_id, message_text, created_at)
     VALUES ($1, $2, $3, NOW())
     RETURNING *;
   `;
-  const result = await pool.query(query, [id_user, friend_id, message_text]);
+  const result = await pool.query(query, [sender_id, receiver_id, message_text]);
   return result.rows[0];
 }
 

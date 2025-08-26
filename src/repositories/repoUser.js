@@ -128,17 +128,28 @@ const insertFriendshipByemail = async (id_user, friend_id) => {
 
 function findFriendsByRequesterId(userId) {
   const query = `
-    SELECT u.id_user, u.user_name as friendName, 
-    u.user_email as friendEmail, 
-    u.user_cel_phone as friendContact,
-     f.friend_id
+    SELECT u.*, f.friend_id
     FROM anama_friendships f
     JOIN anama_user u ON u.id_user = f.friend_id
     WHERE f.id_user = $1
     ORDER BY f.created_at DESC
+
   `;
   return pool.query(query, [userId]).then(res => res.rows);
 }
+// function findFriendsByRequesterId(userId) {
+//   const query = `
+//     SELECT u.id_user, u.user_name as friendName, 
+//     u.user_email as friendEmail, 
+//     u.user_cel_phone as friendContact,
+//      f.friend_id
+//     FROM anama_friendships f
+//     JOIN anama_user u ON u.id_user = f.friend_id
+//     WHERE f.id_user = $1
+//     ORDER BY f.created_at DESC
+//   `;
+//   return pool.query(query, [userId]).then(res => res.rows);
+// }
 
 
 

@@ -35,6 +35,7 @@ async function GetMessagesBetweenUsers(user1, user2) {
   }
 };
 
+
 async function getMessages(id_user, friend_id) {
   const query = `
     SELECT * FROM anama_messages
@@ -45,11 +46,20 @@ async function getMessages(id_user, friend_id) {
   const result = await pool.query(query, [id_user, friend_id]);
   return result.rows;
 }
+const createMessage = async (sender_id, receiver_id, content) => {
+  const res = await pool.query(
+    `INSERT INTO messages (sender_id, receiver_id, content, timestamp) 
+     VALUES ($1, $2, $3, NOW()) RETURNING *`,
+    [sender_id, receiver_id, content]
+  );
+  return res.rows[0];
+};
+
 
 async function createMessage({ id_user, friend_id, message_text }) {
   const query = `
-    INSERT INTO anama_messages (id_user, friend_id, message_text)
-    VALUES ($1, $2, $3)
+    INSERT INTO anama_messages (id_user, friend_id, message_text, created_at)
+    VALUES ($1, $2, $3, NOW())
     RETURNING *;
   `;
   const result = await pool.query(query, [id_user, friend_id, message_text]);

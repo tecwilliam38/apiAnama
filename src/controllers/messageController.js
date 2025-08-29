@@ -10,20 +10,7 @@ const postMessage = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-const getMessages = async (req, res) => {
-  // const { user1, user2 } = req.query;
 
-  // if (!user1 || !user2) {
-  //   return res.status(400).json({ error: 'Parâmetros user1 e user2 são obrigatórios' });
-  // }
-
-  // try {
-  //   const messages = await messageService.FetchMessages(user1, user2);
-  //   res.json(messages);
-  // } catch (error) {
-  //   res.status(500).json({ error: error.message });
-  // }
-};
 async function sendMessageHandler(req, res) {
   try {
     const { sender_id, receiver_id, message_text } = req.body;
@@ -39,7 +26,7 @@ async function getMessagesUsers(req, res) {
   try {
     const sender_id = parseInt(req.user.id_user); // vem do token via middleware
     const receiver_id = parseInt(req.params.receiver_id);
-    
+
     if (!receiver_id || !sender_id) {
       return res.status(400).json({ error: 'friend_id é obrigatório' });
     }
@@ -55,6 +42,5 @@ async function getMessagesUsers(req, res) {
 export default {
   sendMessageHandler,
   getMessagesUsers,
-  postMessage,
-  getMessages
+  postMessage  
 };

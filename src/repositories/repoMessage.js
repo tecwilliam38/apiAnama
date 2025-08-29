@@ -18,25 +18,6 @@ async function SendMessages({ sender_id, receiver_id, message_text }) {
 
 }
 
-async function GetMessagesBetweenUsers(user1, user2) {
-  // const query = `
-  //   SELECT * FROM anama_messages
-  //   WHERE (sender_id = $1 AND receiver_id = $2)
-  //      OR (sender_id = $2 AND receiver_id = $1)
-  //   ORDER BY created_at ASC;
-  // `;
-  // const values = [user1, user2];
-
-  // try {
-  //   const result = await pool.query(query, values);
-  //   return result.rows;
-  // } catch (error) {
-  //   throw new Error('Erro ao buscar mensagens no banco de dados');
-  // }
-};
-
-
-// async function getMessages(id_user, friend_id) {
 async function getMessages(sender_id,receiver_id) {
 
   const query = `
@@ -58,16 +39,6 @@ async function getMessages(sender_id,receiver_id) {
   return result.rows;
 }
 
-const createMessagess = async (sender_id, receiver_id, content) => {
-  // const res = await pool.query(
-  //   `INSERT INTO messages (sender_id, receiver_id, content, timestamp) 
-  //    VALUES ($1, $2, $3, NOW()) RETURNING *`,
-  //   [sender_id, receiver_id, content]
-  // );
-  // return res.rows[0];
-};
-
-
 async function createMessage({ sender_id, receiver_id, message_text }) {
   const query = `
     INSERT INTO anama_messages (sender_id, receiver_id, message_text, created_at)
@@ -81,6 +52,5 @@ async function createMessage({ sender_id, receiver_id, message_text }) {
 export default {
   getMessages,
   createMessage,
-  SendMessages,
-  GetMessagesBetweenUsers
+  SendMessages,  
 };

@@ -57,7 +57,7 @@ async function ProfileUser(id_user) {
     let sql = `SELECT 
         au.id_user, 
         au.user_name AS nome, 
-        au.user_email, 
+        au.user_email as email, 
         au.profile_image as profile,
         au.user_cel_phone AS telefone,
         au.password AS password

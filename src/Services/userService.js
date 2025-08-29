@@ -36,10 +36,10 @@ async function ProfileUser(id_user) {
     return userProfile;
 }
 
-async function EditarUser(id_user, user_name, user_email, endereco, password, user_cel_phone) {
+async function EditarUser(id_user, user_name, user_email, endereco, password, user_cel_phone, profile_image) {
 
     const usuario = await repoUser.EditarUser(id_user, user_name, user_email,
-        endereco, password, user_cel_phone);
+        endereco, password, user_cel_phone, profile_image);
 
     return usuario;
 }

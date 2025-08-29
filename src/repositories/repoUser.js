@@ -60,6 +60,7 @@ async function ProfileUser(id_user) {
         au.user_email as email, 
         au.profile_image as profile,
         au.user_cel_phone AS telefone,
+        au.endereco,
         au.password AS password
         FROM anama_user AS au
         WHERE au.id_user = $1`;

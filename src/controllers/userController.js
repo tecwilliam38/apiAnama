@@ -5,9 +5,7 @@ import userService from "../Services/userService.js";
 async function CadastroUser(req, res) {
 
   const { user_email, user_name, user_cel_phone, endereco, password } = req.body;
-
   const user = await userService.CadastroUser(user_email, user_name, user_cel_phone, endereco, password);
-
   res.status(201).json(user);
 }
 

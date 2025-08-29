@@ -55,13 +55,13 @@ async function LoginUser(user_email) {
 async function ProfileUser(id_user) {
 
     let sql = `SELECT 
-         au.id_user, 
-         au.user_name AS nome, 
-         au.user_email, 
-         au.user_cel_phone AS telefone,
-         au.password as password,
-       FROM anama_user AS au 
-       WHERE ad.id_user = $1`;
+        au.id_user, 
+        au.user_name AS nome, 
+        au.user_email, 
+        au.user_cel_phone AS telefone,
+        au.password AS password
+        FROM anama_user AS au
+        WHERE au.id_user = $1`;
 
     const userProfile = await pool.query(sql, [id_user]);
 
@@ -103,18 +103,18 @@ const insertFriendship = async (id_user, friend_id) => {
 };
 
 const findByEmailOrPhone = async (contact) => {
-  const isPhone = /^\d+$/.test(contact); // verifica se é só número
-  const query = `
+    const isPhone = /^\d+$/.test(contact); // verifica se é só número
+    const query = `
     SELECT id_user, user_name, user_cel_phone FROM anama_user
     WHERE user_email = $1 OR user_cel_phone = $2
     LIMIT 1
   `;
-  const { rows } = await pool.query(query, [
-    contact, 
-    // O 10aqui abaixo indica que é sistema Decimal, se fosse binário seria "2"
-    isPhone ? parseInt(contact, 10) : null
-  ]);
-  return rows[0];
+    const { rows } = await pool.query(query, [
+        contact,
+        // O 10aqui abaixo indica que é sistema Decimal, se fosse binário seria "2"
+        isPhone ? parseInt(contact, 10) : null
+    ]);
+    return rows[0];
 };
 
 const insertFriendshipByemail = async (id_user, friend_id) => {
@@ -127,7 +127,7 @@ const insertFriendshipByemail = async (id_user, friend_id) => {
 };
 
 function FindFriendsByRequesterId(userId) {
-  const query = `
+    const query = `
     SELECT u.*, f.friend_id
     FROM anama_friendships f
     JOIN anama_user u ON u.id_user = f.friend_id
@@ -135,7 +135,7 @@ function FindFriendsByRequesterId(userId) {
     ORDER BY f.created_at DESC
 
   `;
-  return pool.query(query, [userId]).then(res => res.rows);
+    return pool.query(query, [userId]).then(res => res.rows);
 }
 
 export default {

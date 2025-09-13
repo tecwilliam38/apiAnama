@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import repoMessage from "../repositories/repoMessage.js";
+import repoMessage, { saveMessage } from "../repositories/repoMessage.js";
 
 const URL = "https://yulykztzhmoxfztykeop.supabase.co";
 const KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1bHlrenR6aG1veGZ6dHlrZW9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2MTUyNjAsImV4cCI6MjA2NjE5MTI2MH0.sFnTOu8fRgkycEZatgy4eVK-SyRjyrKKUChdByoiy1c";
@@ -20,9 +20,17 @@ async function getConversation( sender_id, receiver_id) {
   return await repoMessage.getMessages(  sender_id, receiver_id);
 }
 
+const sendMessageZap = async (data) => {
+  const message = await saveMessage(data);
+  // Aqui você pode adicionar lógica de notificação, webhook, etc.
+  return message;
+};
+
+
 
 export default { 
   sendMessage,
   getConversation,
-  createMessage
- }
+  createMessage,
+  sendMessageZap
+  }

@@ -1,3 +1,4 @@
+import supabase from "../database/supabaseConfig.js";
 import messageService from "../Services/messageService.js";
 
 
@@ -39,8 +40,55 @@ async function getMessagesUsers(req, res) {
   }
 }
 
+export const sendMessage = async (req, res) => {
+  const { to, text } = req.body;
+  const media = req.file;
+
+  try {
+    let mediaUrl = null;
+
+    if (media) {
+      const { data, error } = await supabase.storage
+        .from('anama-media')
+        .upload(`messages/${Date.now()}_${media.originalname}`, media.buffer, {
+          contentType: media.mimetype,
+        });
+
+      if (error) throw error;
+
+      mediaUrl = supabase.storage
+        .from('anama-media')
+        .getPublicUrl(data.path).publicUrl;
+    }
+
+    res.status(200).json({
+      status: 'Mensagem enviada',
+      to,
+      text,
+      mediaUrl,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const handleSendMessage = async (req, res) => {
+  const { from, to, message_text } = req.body;
+
+  try {
+    const message = await messageService.sendMessageZap({ from, to, message_text });
+    res.status(201).json({ success: true, message });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+
+
 export default {
   sendMessageHandler,
   getMessagesUsers,
-  postMessage  
+  postMessage,
+  sendMessage,
+  handleSendMessage,
 };

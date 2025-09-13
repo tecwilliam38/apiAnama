@@ -48,9 +48,24 @@ async function createMessage({ sender_id, receiver_id, message_text }) {
   const result = await pool.query(query, [sender_id, receiver_id, message_text]);
   return result.rows[0];
 }
+// TEste de api AnamaZap
+export const saveMessage = async ({ from, to, message_text }) => {
+  const query = `
+    INSERT INTO anama_messages (sender_id, receiver_id, message_text, created_at)
+    VALUES ($1, $2, $3, NOW())
+    RETURNING *;
+  `;
+  const values = [from, to, message_text];
+  const result = await pool.query(query, values);
+  return result.rows[0];
+};
+
+
+
 
 export default {
   getMessages,
   createMessage,
   SendMessages,  
+  saveMessage
 };

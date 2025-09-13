@@ -1,12 +1,13 @@
 import { Router } from "express";
 import userController from "./controllers/userController.js";
 import jwt from "./token.js"
-import messageController from "./controllers/messageController.js";
+import messageController, { sendMessage } from "./controllers/messageController.js";
 import multer from "multer";
 
 
 const upload = multer({ storage: multer.memoryStorage() });
 const router = Router();
+const uploadmedia = multer();
 
 // Rotas Usuários
 router.post("/user/register", userController.CadastroUser);
@@ -21,6 +22,7 @@ router.post('/friends/contact', jwt.ValidateToken, userController.addFriendByCon
 
 // Rotas Posts
 router.post('/messages/send', jwt.ValidateToken, messageController.postMessage);
+router.post('/send', messageController.handleSendMessage);
 router.get('/messages/friends/:userId',jwt.ValidateToken,userController.ListMyFriendsHandler);
 // Enviar mensagem
 router.post('/messages/', jwt.ValidateToken, messageController.sendMessageHandler);

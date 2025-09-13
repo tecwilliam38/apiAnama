@@ -1,3 +1,4 @@
+import { createClient } from "@supabase/supabase-js";
 
 
 const URL = "https://yulykztzhmoxfztykeop.supabase.co";
@@ -5,3 +6,4 @@ const KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZi
 
 const supabase = createClient(URL, KEY);
 
+export default supabase;

@@ -26,11 +26,16 @@ const sendMessageZap = async (data) => {
   return message;
 };
 
+const createInteraction = async (data) => {
+  return await repoMessage.insertInteraction(data);
+};
+
 
 
 export default { 
   sendMessage,
   getConversation,
   createMessage,
-  sendMessageZap
-  }
+  sendMessageZap,
+  createInteraction
+};

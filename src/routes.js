@@ -23,6 +23,7 @@ router.post('/friends/contact', jwt.ValidateToken, userController.addFriendByCon
 // Rotas Posts
 router.post('/messages/send', jwt.ValidateToken, messageController.postMessage);
 router.post('/send', messageController.handleSendMessage);
+router.post('/reactions', messageController.handleCreateInteraction);
 router.get('/messages/friends/:userId',jwt.ValidateToken,userController.ListMyFriendsHandler);
 // Enviar mensagem
 router.post('/messages/', jwt.ValidateToken, messageController.sendMessageHandler);

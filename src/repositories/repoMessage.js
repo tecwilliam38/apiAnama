@@ -60,6 +60,18 @@ export const saveMessage = async ({ from, to, message_text }) => {
   return result.rows[0];
 };
 
+// INSERT INTO interactions (message_id, user_id, emoji, comment)
+const insertInteraction = async ({ messageId, userId, emoji, comment }) => {
+  const query = `
+    INSERT INTO anama_message_reactions (message_id, user_id, emoji, comment)
+    VALUES ($1, $2, $3, $4)
+    RETURNING *;
+  `;
+  const values = [messageId, userId, emoji, comment];
+  const result = await pool.query(query, values);
+  return result.rows[0];
+};
+
 
 
 
@@ -67,5 +79,6 @@ export default {
   getMessages,
   createMessage,
   SendMessages,  
-  saveMessage
+  saveMessage,
+  insertInteraction
 };

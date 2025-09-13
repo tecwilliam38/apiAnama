@@ -83,6 +83,18 @@ const handleSendMessage = async (req, res) => {
   }
 };
 
+const handleCreateInteraction = async (req, res) => {
+  const { messageId, emoji, comment } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const interaction = await messageService.createInteraction({ messageId, userId, emoji, comment });
+    res.status(201).json(interaction);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 
 
 export default {
@@ -91,4 +103,5 @@ export default {
   postMessage,
   sendMessage,
   handleSendMessage,
+  handleCreateInteraction
 };

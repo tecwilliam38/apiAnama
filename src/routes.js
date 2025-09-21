@@ -20,7 +20,7 @@ router.get('/users/friends', jwt.ValidateToken, userController.getFriends);
 router.post('/friends/contact', jwt.ValidateToken, userController.addFriendByContact);
 
 // Rotas Clients
-router.post("/client/register", clientController.InserirClient);
+router.post("/client/register", jwt.ValidateToken, clientController.InserirClient);
 router.get("/client/listar", jwt.ValidateToken, clientController.ListarClient);
 router.get("/client/listar/:id_client", jwt.ValidateToken, clientController.ListarClientId);
 

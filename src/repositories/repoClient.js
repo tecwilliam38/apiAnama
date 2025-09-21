@@ -1,14 +1,24 @@
 import pool from "../database/db.js";
 
-// const clientExiste = await verificaClientExiste(client_name);
-// if (clientExiste) {
-//     console.log('Client já cadastrado.');
-//     return { erro: 'Client já cadastrado' };
-// }
+async function verificaClientExiste(endereco) {
+    try {
+        const query = 'SELECT count(*) FROM anama_client WHERE endereco = $1';
+        const result = await pool.query(query, [endereco]);
+        return parseInt(result.rows[0].count) > 0;
+    } catch (error) {
+        console.error('Erro ao verificar endereco:', error);
+        throw error;
+    }
+}
 
 async function InserirClient(
     client_name, client_sector, cidade, endereco, phone_contato, created_at, updated_at
 ) {
+    const clientExiste = await verificaClientExiste(endereco);
+    if (clientExiste) {
+        console.log('Cliente já cadastrado.');
+        return { erro: 'Cliente já cadastrado' };
+    }
     try {
         const sqlInsert = `
             INSERT INTO anama_client (client_name, client_sector, cidade, endereco, phone_contato, created_at, updated_at)

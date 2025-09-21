@@ -12,12 +12,12 @@ async function InserirClient(
         }
         const sqlInsert = `
             INSERT INTO anama_client (client_name, client_sector, cidade, endereco, phone_contato, created_at, updated_at)
-            VALUES ($1, $2, $3, $4, current_timestamp, current_timestamp)
+            VALUES ($1, $2, $3, $4, $5, current_timestamp, current_timestamp)
             RETURNING id_client;
         `;
 
         const result = await pool.query(sqlInsert, [
-            client_name, client_sector, endereco, phone_contato
+            client_name, client_sector, cidade, endereco, phone_contato
         ]);
 
         return result.rows[0]; // Retorna o cliente inserido com id_client

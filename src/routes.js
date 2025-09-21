@@ -3,6 +3,7 @@ import userController from "./controllers/userController.js";
 import jwt from "./token.js"
 import messageController, { sendMessage } from "./controllers/messageController.js";
 import multer from "multer";
+import clientController from "./controllers/clientController.js";
 
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -18,13 +19,16 @@ router.post('/users/friends/add', jwt.ValidateToken, userController.addFriend);
 router.get('/users/friends', jwt.ValidateToken, userController.getFriends);
 router.post('/friends/contact', jwt.ValidateToken, userController.addFriendByContact);
 
-// Rotas Admin
+// Rotas Clients
+router.post("/client/register", clientController.InserirClient);
+router.get("/client/listar", jwt.ValidateToken, clientController.ListarClient);
+router.get("/client/listar/:id_client", jwt.ValidateToken, clientController.ListarClientId);
 
 // Rotas Posts
 router.post('/messages/send', jwt.ValidateToken, messageController.postMessage);
 router.post('/send', messageController.handleSendMessage);
 router.post('/reactions', messageController.handleCreateInteraction);
-router.get('/messages/friends/:userId',jwt.ValidateToken,userController.ListMyFriendsHandler);
+router.get('/messages/friends/:userId', jwt.ValidateToken, userController.ListMyFriendsHandler);
 // Enviar mensagem
 router.post('/messages/', jwt.ValidateToken, messageController.sendMessageHandler);
 // Buscar conversa com um amigo essa funciona

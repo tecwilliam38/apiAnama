@@ -40,8 +40,8 @@ async function InserirClient(
 
 async function ListarClient() {
 
-    let sql = `select id_client, client_name, client_sector as setor, endereco, 
-    phone_contato, email from anama_client order by client_name`;
+    let sql = `select id_client, client_name, client_sector as setor,cidade, endereco, 
+    phone_contato from anama_client order by client_name`;
     const clients = await pool.query(sql, []);
     return clients.rows;
 }

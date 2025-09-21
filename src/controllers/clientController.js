@@ -2,9 +2,9 @@ import clientService from "../Services/clientService.js";
 
 
 async function InserirClient(req, res) {
-    const { client_name, client_sector, endereco, phone_contato } = req.body; 
+    const { client_name, client_sector, cidade, endereco, phone_contato } = req.body; 
 
-    const client = await clientService.InserirClient(client_name, client_sector, endereco, phone_contato);
+    const client = await clientService.InserirClient(client_name, client_sector, cidade, endereco, phone_contato);
     res.status(201).json(client);
 }
 async function ListarClient(req, res) {

@@ -11,8 +11,8 @@ async function InserirClient(
             return { erro: 'Client já cadastrado' };
         }
         const sqlInsert = `
-            INSERT INTO anama_client (client_name, client_sector, endereco, phone_contato, created_at, updated_at)
-                VALUES ($1, $2, $3, $4, current_timestamp, current_timestamp)
+            INSERT INTO anama_client (client_name, client_sector, cidade, endereco, phone_contato, created_at, updated_at)
+            VALUES ($1, $2, $3, $4, current_timestamp, current_timestamp)
             RETURNING id_client;
         `;
 

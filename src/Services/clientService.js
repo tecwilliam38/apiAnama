@@ -2,11 +2,11 @@ import bcrypt from "bcryptjs"
 import jwt from "../token.js"
 import clientRepo from "../repositories/repoClient.js";
 
-async function InserirClient(client_name, client_sector, 
+async function InserirClient(client_name, client_sector, cidade,
     endereco, phone_contato) {
-    
-    const client = await clientRepo.InserirClient(client_name, client_sector,
-         endereco, phone_contato);
+
+    const client = await clientRepo.InserirClient(client_name, client_sector, cidade,
+        endereco, phone_contato);
 
     client.token = jwt.CreateToken(client.id_client);
 

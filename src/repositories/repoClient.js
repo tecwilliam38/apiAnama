@@ -1,15 +1,15 @@
 import pool from "../database/db.js";
 
+// const clientExiste = await verificaClientExiste(client_name);
+// if (clientExiste) {
+//     console.log('Client já cadastrado.');
+//     return { erro: 'Client já cadastrado' };
+// }
 
 async function InserirClient(
     client_name, client_sector, cidade, endereco, phone_contato, created_at, updated_at
 ) {
     try {
-        const clientExiste = await verificaClientExiste(client_name);
-        if (clientExiste) {
-            console.log('Client já cadastrado.');
-            return { erro: 'Client já cadastrado' };
-        }
         const sqlInsert = `
             INSERT INTO anama_client (client_name, client_sector, cidade, endereco, phone_contato, created_at, updated_at)
             VALUES ($1, $2, $3, $4, $5, current_timestamp, current_timestamp)

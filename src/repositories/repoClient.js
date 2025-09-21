@@ -2,7 +2,7 @@ import pool from "../database/db.js";
 
 
 async function InserirClient(
-    client_name, client_sector, endereco, phone_contato, created_at, updated_at
+    client_name, client_sector, cidade, endereco, phone_contato, created_at, updated_at
 ) {
     try {
         const clientExiste = await verificaClientExiste(client_name);

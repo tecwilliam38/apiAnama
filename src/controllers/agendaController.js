@@ -14,15 +14,15 @@ async function InsertAgenda(req, res) {
     }
 }
 
+// const { dt_start, dt_end } = req.query;
+
+// Converte para null se estiver vazio
+// dt_start = dt_start || null;
+// dt_end = dt_end || null;
 async function ListarServicos(req, res) {
 
     const id_user = req.user.id_user;
     const { dt_start, dt_end } = req.body;
-    // const { dt_start, dt_end } = req.query;
-
-    // Converte para null se estiver vazio
-    dt_start = dt_start || null;
-    dt_end = dt_end || null;
 
 
 

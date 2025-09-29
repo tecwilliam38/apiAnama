@@ -24,8 +24,8 @@ router.post('/friends/contact', jwt.ValidateToken, userController.addFriendByCon
 router.post("/client/register", jwt.ValidateToken, clientController.InserirClient);
 router.get("/client/listar", jwt.ValidateToken, clientController.ListarClient);
 router.get("/client/listar/:id_client", jwt.ValidateToken, clientController.ListarClientId);
-router.post('/client/agendamentos', jwt.ValidateToken, agendaController.InsertAgenda);
-router.get('/client/agendamentos', jwt.ValidateToken, agendaController.ListarServicos);
+router.post('/client/agendamentos/add', jwt.ValidateToken, agendaController.InsertAgenda);
+router.post('/client/agendamentos/list', jwt.ValidateToken, agendaController.ListarServicos);
 
 
 // Rotas Posts

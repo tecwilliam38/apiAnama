@@ -6,7 +6,7 @@ async function InsertAgenda(id_user, id_service, id_client, price, status, booki
             price, status, booking_datetime) 
          values($1, $2, $3, $4, $5, $6) returning id_appointment`;
 
-         try {
+    try {
         const result = await pool.query(sql, [id_user, id_service, id_client, price, status, booking_datetime]);
         return result.rows[0].id_appointment;
     } catch (error) {
@@ -17,25 +17,28 @@ async function InsertAgenda(id_user, id_service, id_client, price, status, booki
 
 async function ListarServicos(id_user, dt_start = null, dt_end = null) {
     let filtro = [id_user]; // começa com id_user como $1
-    let index = 2; // próximo índice para filtros de data
-
-    let sql = `
-        SELECT *
-        FROM anama_appointments
-        WHERE id_user = $1
-    `;
-
+    let index = 2; // próximo índice para filtros de data  
+    let sql = `SELECT 
+        a.*, 
+        c.client_name AS cliente,         
+        c.endereco AS endereco,
+        c.client_sector AS filial,
+        c.cidade AS cidade
+        FROM anama_appointments a
+        JOIN anama_client c ON a.id_client = c.id_client
+        WHERE a.id_user = $1        
+`;
     if (dt_start) {
-        sql += ` AND booking_datetime >= $${index++}`;
+        sql += ` AND a.booking_datetime >= $${index++}`;
         filtro.push(dt_start);
     }
 
     if (dt_end) {
-        sql += ` AND booking_datetime <= $${index++}`;
+        sql += ` AND a.booking_datetime <= $${index++}`;
         filtro.push(dt_end);
     }
 
-    sql += ` ORDER BY booking_datetime ASC`;
+    sql += ` ORDER BY a.booking_datetime ASC`;
 
     try {
         const serv = await pool.query(sql, filtro);

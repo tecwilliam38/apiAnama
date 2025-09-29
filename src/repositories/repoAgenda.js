@@ -4,14 +4,14 @@ async function InsertAgenda(id_user, id_service, id_client, price, status, booki
 
     let sql = `insert into anama_appointments(id_user, id_service, id_client,
             price, status, booking_datetime) 
-         values($1, $2, $3, $4, $5, current_timestamp) returning id_appointment`;
+         values($1, $2, $3, $4, $5, $6) returning id_appointment`;
 
-    try {
-        const result = await pool.query(sql, [id_user, id_client, id_service, price, status, booking_datetime]);
+         try {
+        const result = await pool.query(sql, [id_user, id_service, id_client, price, status, booking_datetime]);
         return result.rows[0].id_appointment;
     } catch (error) {
-        console.error("Erro ao inserir agendamento:", err);
-        throw err; // ou return { success: false, error: err.message };
+        console.error("Erro ao inserir agendamento:", error);
+        throw error; // ou return { success: false, error: err.message };
     }
 }
 async function ListarServicos(id_user, dt_start = null, dt_end = null) {

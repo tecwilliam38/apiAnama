@@ -14,6 +14,7 @@ async function InsertAgenda(id_user, id_service, id_client, price, status, booki
         throw error; // ou return { success: false, error: err.message };
     }
 }
+
 async function ListarServicos(id_user, dt_start = null, dt_end = null) {
     let filtro = [id_user]; // começa com id_user como $1
     let index = 2; // próximo índice para filtros de data

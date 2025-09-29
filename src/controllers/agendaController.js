@@ -13,10 +13,18 @@ async function InsertAgenda(req, res) {
         res.status(500).json({ error: 'Erro ao inserir agendamento' });
     }
 }
+
 async function ListarServicos(req, res) {
 
     const id_user = req.user.id_user;
-    const { dt_start, dt_end } = req.query;
+    const { dt_start, dt_end } = req.body;
+    // const { dt_start, dt_end } = req.query;
+
+    // Converte para null se estiver vazio
+    dt_start = dt_start || null;
+    dt_end = dt_end || null;
+
+
 
     try {
         const servicos = await agendaService.ListarServicos(id_user, dt_start, dt_end);

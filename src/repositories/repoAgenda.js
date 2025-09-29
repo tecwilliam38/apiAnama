@@ -20,7 +20,8 @@ async function ListarServicos(id_user, dt_start = null, dt_end = null) {
     let index = 2; // próximo índice para filtros de data  
     let sql = `SELECT 
         a.*, 
-        c.client_name AS cliente,         
+        c.client_name AS cliente,     
+        c.client_sector AS setor,    
         c.endereco AS endereco,
         c.client_sector AS filial,
         c.cidade AS cidade

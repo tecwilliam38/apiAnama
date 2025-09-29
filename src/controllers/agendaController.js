@@ -1,8 +1,9 @@
-import agendaService from "../Services/agendaService";
+import agendaService from "../Services/agendaService.js";
 
 async function InsertAgenda(req, res) {
 
-    const { id_user, id_service, id_client, price, status, booking_datetime } = req.body;
+    const id_user = req.user.id_user; // vem do token decodificado
+    const { id_service, id_client, price, status, booking_datetime } = req.body;
 
     try {
         const id_appointment = await agendaService.InsertAgenda(id_user, id_service, id_client, price, status, booking_datetime);
@@ -11,10 +12,10 @@ async function InsertAgenda(req, res) {
         console.error('Erro ao inserir agendamento:', error);
         res.status(500).json({ error: 'Erro ao inserir agendamento' });
     }
-}   
+}
 async function ListarServicos(req, res) {
 
-    const id_user = req.params.id_user;
+    const id_user = req.user.id_user;
     const { dt_start, dt_end } = req.query;
 
     try {
@@ -24,7 +25,8 @@ async function ListarServicos(req, res) {
         console.error('Erro ao listar serviços:', error);
         res.status(500).json({ error: 'Erro ao listar serviços' });
     }
-}   
+}
+
 async function Editar(req, res) {
 
     const id_appointment = req.params.id_appointment;
@@ -49,5 +51,5 @@ async function Excluir(req, res) {
         console.error('Erro ao excluir agendamento:', error);
         res.status(500).json({ error: 'Erro ao excluir agendamento' });
     }
-}   
+}
 export default { InsertAgenda, ListarServicos, Editar, Excluir };

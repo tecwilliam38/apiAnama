@@ -47,7 +47,8 @@ async function ListarId(req, res) {
 async function Editar(req, res) {
 
     const id_appointment = req.params.id_appointment;
-    const { id_user, id_service, id_client, price, status, booking_datetime } = req.body;
+    const id_user = req.user.id_user;
+    const { id_service, id_client, price, status, booking_datetime } = req.body;
 
     try {
         const updated = await agendaService.Editar(id_appointment, id_user, id_service, id_client, price, status, booking_datetime);

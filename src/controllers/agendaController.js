@@ -35,6 +35,15 @@ async function ListarServicos(req, res) {
     }
 }
 
+async function ListarId(req, res) {
+
+    const id_appointment = req.params.id_appointment;
+    const appointments = await agendaService.ListarId(id_appointment);
+
+    res.status(200).json(appointments);
+}
+
+
 async function Editar(req, res) {
 
     const id_appointment = req.params.id_appointment;
@@ -60,4 +69,4 @@ async function Excluir(req, res) {
         res.status(500).json({ error: 'Erro ao excluir agendamento' });
     }
 }
-export default { InsertAgenda, ListarServicos, Editar, Excluir };
+export default { InsertAgenda, ListarServicos, Editar, Excluir, ListarId };

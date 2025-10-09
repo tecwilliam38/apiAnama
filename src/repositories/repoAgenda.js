@@ -48,6 +48,26 @@ async function ListarServicos(id_user, dt_start = null, dt_end = null) {
     }
 }
 
+async function ListarId(id_appointment) {
+
+    let sql = `select pa.id_appointment, s.description as service, 
+    pt.name as tecnico, pt.specialty,
+    pa.booking_date, pa.booking_hour, pc.client_name as client, pts.price, pa.id_tecnico, 
+    pa.id_service,pa.status, pa.id_client
+    from anama_appointments pa
+    join apitech_services s on (s.id_service = pa.id_service)
+    join apitech_tecnicos pt on (pt.id_tecnico = pa.id_tecnico)
+    join apitech_client pc on (pc.id_client = pa.id_client)
+    left join apitech_tecnicos_services pts on (pts.id_tecnico = pa.id_tecnico and 
+                            pts.id_service = pa.id_service)
+    where pa.id_appointment = $1
+    order by pa.booking_date, pa.booking_hour  `;
+
+    const appointments = await pool.query(sql, [id_appointment]);
+
+    return appointments.rows[0];
+}
+
 async function Editar(id_appointment, id_user, id_service, id_client, price, status, booking_datetime) {
     const sql = `
         UPDATE anama_appointments
@@ -86,5 +106,5 @@ async function Excluir(id_appointment) {
     }
 }
 
-export default { InsertAgenda, ListarServicos, Editar, Excluir };
+export default { InsertAgenda, ListarServicos, Editar, Excluir, ListarId };
 

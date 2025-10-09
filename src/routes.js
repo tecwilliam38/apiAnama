@@ -26,6 +26,7 @@ router.get("/client/listar", jwt.ValidateToken, clientController.ListarClient);
 router.get("/client/listar/:id_client", jwt.ValidateToken, clientController.ListarClientId);
 router.post('/client/agendamentos/add', jwt.ValidateToken, agendaController.InsertAgenda);
 router.post('/client/agendamentos/list', jwt.ValidateToken, agendaController.ListarServicos);
+router.get("/agendamentos/listar/:id_appointment", jwt.ValidateToken, agendaController.ListarId);
 router.put('/agendamentos/:id_appointment',jwt.ValidateToken, agendaController.Editar);
 router.delete('/agendamentos/:id_appointment', jwt.ValidateToken, agendaController.Excluir);
 

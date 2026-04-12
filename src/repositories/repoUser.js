@@ -40,6 +40,7 @@ async function CadastroUser(
     }
 }
 
+
 async function LoginUser(user_email) {
     let sql = `select * from anama_user where user_email = $1`;
     try {

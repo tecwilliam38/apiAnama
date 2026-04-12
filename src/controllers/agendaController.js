@@ -18,14 +18,7 @@ async function ListarServicos(req, res) {
 
     const id_user = req.user.id_user;
     let { dt_start, dt_end } = req.body;
-    // if (dt_start && dt_start.length === 10) {
-    //     dt_start = dt_start + 'T00:00:00';
-    // }
-
-    // if (dt_end && dt_end.length === 10) {
-    //     dt_end = dt_end + 'T23:59:59';
-    // }
-
+   
     try {
         const servicos = await agendaService.ListarServicos(id_user, dt_start, dt_end);
         res.status(200).json(servicos);

@@ -62,6 +62,7 @@ async function ProfileUser(id_user) {
         au.profile_image as profile,
         au.user_cel_phone AS telefone,
         au.endereco,
+        au.genre AS genero,
         au.password AS password
         FROM anama_user AS au
         WHERE au.id_user = $1`;
